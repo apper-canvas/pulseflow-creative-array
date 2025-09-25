@@ -11,22 +11,13 @@ const enrichDealWithRelatedData = async (deal) => {
   const contact = contactsData.find(c => c.Id === deal.contactId);
   const company = companiesData.find(c => c.Id === deal.companyId);
   
-  let salesRepName = null;
-  if (deal.salesRepId) {
-    try {
-      const salesRep = await salesRepService.getById(deal.salesRepId);
-      salesRepName = salesRep ? salesRep.name : null;
-    } catch (error) {
-      salesRepName = null;
-    }
-  }
+// Sales rep lookup handled in frontend for better performance
   
   return {
     ...deal,
     contactName: contact ? `${contact.firstName} ${contact.lastName}` : null,
     companyName: company ? company.name : null,
-    salesRepName
-  };
+};
 };
 
 export const dealService = {

@@ -13,7 +13,7 @@ const [formData, setFormData] = useState({
     stage: "Lead",
     probability: "",
     expectedCloseDate: "",
-    assignedTo: "John Smith",
+salesRepId: 1,
     salesRepId: "",
     notes: ""
   });
@@ -31,7 +31,7 @@ setFormData({
         stage: deal.stage || "Lead",
         probability: deal.probability?.toString() || "",
         expectedCloseDate: deal.expectedCloseDate ? deal.expectedCloseDate.split("T")[0] : "",
-        assignedTo: deal.assignedTo || "John Smith",
+salesRepId: deal.salesRepId || 1,
         salesRepId: deal.salesRepId?.toString() || "",
         notes: deal.notes || ""
       });
