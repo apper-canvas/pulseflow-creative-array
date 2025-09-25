@@ -1,0 +1,74 @@
+[
+  {
+    "Id": 1,
+    "type": "Call",
+    "subject": "Discovery Call - TechCorp Requirements",
+    "description": "Discussed current pain points and system requirements. Very positive response to our enterprise solution.",
+    "contactId": 1,
+    "dealId": 1,
+    "assignedTo": "John Smith",
+    "dueDate": null,
+    "completedAt": "2024-01-22T10:30:00Z",
+    "createdAt": "2024-01-22T10:30:00Z"
+  },
+  {
+    "Id": 2,
+    "type": "Email",
+    "subject": "Contract Sent - Marketing Automation",
+    "description": "Sent final contract for review and signature. Awaiting response by end of week.",
+    "contactId": 2,
+    "dealId": 2,
+    "assignedTo": "Jane Doe",
+    "dueDate": null,
+    "completedAt": "2024-01-20T14:15:00Z",
+    "createdAt": "2024-01-20T14:15:00Z"
+  },
+  {
+    "Id": 3,
+    "type": "Meeting",
+    "subject": "Product Demo - StartupXYZ",
+    "description": "Delivered comprehensive product demo. Founder impressed with analytics capabilities.",
+    "contactId": 3,
+    "dealId": 3,
+    "assignedTo": "John Smith",
+    "dueDate": null,
+    "completedAt": "2024-01-21T15:00:00Z",
+    "createdAt": "2024-01-21T15:00:00Z"
+  },
+  {
+    "Id": 4,
+    "type": "Note",
+    "subject": "Competitor Analysis - MegaCorp",
+    "description": "Researched competitor proposals. Our solution offers better ROI and integration capabilities.",
+    "contactId": 4,
+    "dealId": 4,
+    "assignedTo": "Jane Doe",
+    "dueDate": null,
+    "completedAt": "2024-01-23T11:20:00Z",
+    "createdAt": "2024-01-23T11:20:00Z"
+  },
+  {
+    "Id": 5,
+    "type": "Call",
+    "subject": "Contract Negotiation - FutureTech",
+    "description": "Discussed pricing and implementation timeline. Minor adjustments needed to close the deal.",
+    "contactId": 5,
+    "dealId": 5,
+    "assignedTo": "John Smith",
+    "dueDate": null,
+    "completedAt": "2024-01-24T09:45:00Z",
+    "createdAt": "2024-01-24T09:45:00Z"
+  },
+  {
+    "Id": 6,
+    "type": "Email",
+    "subject": "Follow-up - Global Ventures Demo",
+    "description": "Sent follow-up email after demo with pricing information and next steps.",
+    "contactId": 6,
+    "dealId": 6,
+    "assignedTo": "Jane Doe",
+    "dueDate": null,
+    "completedAt": "2024-01-21T16:30:00Z",
+    "createdAt": "2024-01-21T16:30:00Z"
+  }
+]

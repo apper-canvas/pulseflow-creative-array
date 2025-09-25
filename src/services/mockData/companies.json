@@ -1,0 +1,68 @@
+[
+  {
+    "Id": 1,
+    "name": "TechCorp Solutions",
+    "industry": "Technology",
+    "size": "200-500",
+    "website": "https://techcorp.com",
+    "address": "123 Tech Street, San Francisco, CA 94105",
+    "phone": "(555) 123-0000",
+    "createdAt": "2024-01-15T09:00:00Z",
+    "updatedAt": "2024-01-20T14:30:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Innovate Plus",
+    "industry": "Software Development",
+    "size": "50-200",
+    "website": "https://innovateplus.com",
+    "address": "456 Innovation Ave, Austin, TX 78701",
+    "phone": "(555) 234-0000",
+    "createdAt": "2024-01-10T11:15:00Z",
+    "updatedAt": "2024-01-22T16:45:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "StartupXYZ",
+    "industry": "FinTech",
+    "size": "10-50",
+    "website": "https://startupxyz.com",
+    "address": "789 Startup Blvd, New York, NY 10001",
+    "phone": "(555) 345-0000",
+    "createdAt": "2024-01-18T13:20:00Z",
+    "updatedAt": "2024-01-18T13:20:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "MegaCorp Industries",
+    "industry": "Manufacturing",
+    "size": "1000+",
+    "website": "https://megacorp.com",
+    "address": "321 Industrial Way, Detroit, MI 48201",
+    "phone": "(555) 456-0000",
+    "createdAt": "2024-01-12T10:30:00Z",
+    "updatedAt": "2024-01-19T12:15:00Z"
+  },
+  {
+    "Id": 5,
+    "name": "FutureTech Labs",
+    "industry": "Research & Development",
+    "size": "100-200",
+    "website": "https://futuretechlabs.com",
+    "address": "654 Research Park, Seattle, WA 98101",
+    "phone": "(555) 567-0000",
+    "createdAt": "2024-01-08T08:45:00Z",
+    "updatedAt": "2024-01-21T15:30:00Z"
+  },
+  {
+    "Id": 6,
+    "name": "Global Ventures",
+    "industry": "Consulting",
+    "size": "500-1000",
+    "website": "https://globalventures.com",
+    "address": "987 Corporate Plaza, Chicago, IL 60601",
+    "phone": "(555) 678-0000",
+    "createdAt": "2024-01-20T14:10:00Z",
+    "updatedAt": "2024-01-20T14:10:00Z"
+  }
+]
