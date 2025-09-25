@@ -7,8 +7,7 @@
     "value": 75000,
     "stage": "Negotiation",
     "probability": 80,
-"notes": "Initial contact made, very promising lead",
-    "salesRepId": 1,
+"salesRepId": 1,
     "createdAt": "2024-01-15T10:30:00Z",
     "updatedAt": "2024-01-22T11:30:00Z",
     "notes": "Final contract review. Expecting signature next week."
@@ -21,8 +20,7 @@
     "value": 45000,
     "stage": "Closed Won",
     "probability": 100,
-"notes": "Follow-up meeting scheduled for next week",
-    "salesRepId": 2,
+"salesRepId": 2,
     "createdAt": "2024-01-16T14:20:00Z",
     "updatedAt": "2024-01-20T16:45:00Z",
     "notes": "Deal closed successfully. Implementation starting next month."
@@ -35,8 +33,7 @@
     "value": 15000,
     "stage": "Qualified",
     "probability": 60,
-"notes": "Technical requirements discussion completed",
-    "salesRepId": 3,
+"salesRepId": 3,
     "createdAt": "2024-01-17T09:15:00Z",
     "updatedAt": "2024-01-21T10:15:00Z",
     "notes": "Founder very interested. Waiting for board approval."
@@ -49,8 +46,7 @@
     "value": 120000,
     "stage": "Proposal",
     "probability": 70,
-"notes": "Proposal submitted, awaiting feedback",
-    "salesRepId": 4,
+"salesRepId": 4,
     "createdAt": "2024-01-18T16:45:00Z",
     "updatedAt": "2024-01-23T14:20:00Z",
     "notes": "Proposal submitted. Competitive situation with two other vendors."
@@ -63,8 +59,7 @@
     "value": 85000,
     "stage": "Negotiation",
     "probability": 90,
-"notes": "Contract review in progress",
-    "salesRepId": 5,
+"salesRepId": 5,
     "createdAt": "2024-01-19T11:30:00Z",
     "updatedAt": "2024-01-24T09:30:00Z",
     "notes": "Existing client expansion. Minor pricing negotiations remaining."
@@ -77,8 +72,7 @@
     "value": 35000,
     "stage": "Lead",
     "probability": 40,
-"notes": "Final negotiations completed",
-    "salesRepId": 6,
+"salesRepId": 6,
     "createdAt": "2024-01-20T13:00:00Z",
     "updatedAt": "2024-01-20T14:10:00Z",
     "notes": "Initial interest. Demo scheduled for next week."
