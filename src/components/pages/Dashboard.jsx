@@ -4,6 +4,7 @@ import { dealService } from "@/services/api/dealService";
 import { taskService } from "@/services/api/taskService";
 import { activityService } from "@/services/api/activityService";
 import { format } from "date-fns";
+import { formatCurrency } from "@/utils/formatCurrency";
 import ApperIcon from "@/components/ApperIcon";
 import MetricCard from "@/components/molecules/MetricCard";
 import ActivityItem from "@/components/molecules/ActivityItem";
