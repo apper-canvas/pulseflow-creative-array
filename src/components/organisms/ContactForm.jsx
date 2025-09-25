@@ -202,8 +202,6 @@ name="first_name_c"
           type="textarea"
           value={formData.notes_c}
           onChange={handleChange}
-          rows={4}
-        />
 rows={4}
         />
 
