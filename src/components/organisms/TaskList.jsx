@@ -3,11 +3,11 @@ import Card from "@/components/atoms/Card";
 import StatusIndicator from "@/components/molecules/StatusIndicator";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
-import { format, isOverdue } from "date-fns";
+import { format } from "date-fns";
 
 const TaskList = ({ tasks, onEdit, onDelete, onToggleComplete }) => {
-  const isTaskOverdue = (task) => {
-    return task.status !== "Completed" && isOverdue(new Date(task.dueDate));
+const isTaskOverdue = (task) => {
+    return task.status !== "Completed" && new Date(task.dueDate) < new Date();
   };
 
   return (
