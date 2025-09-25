@@ -4,7 +4,7 @@ import Button from "@/components/atoms/Button";
 import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
 
-const DealForm = ({ deal, contacts, companies, onSubmit, onCancel, isEditing = false }) => {
+const DealForm = ({ deal, contacts, companies, salesReps, onSubmit, onCancel, isEditing = false }) => {
 const [formData, setFormData] = useState({
     title: "",
     contactId: "",
@@ -14,7 +14,7 @@ const [formData, setFormData] = useState({
     probability: "",
     expectedCloseDate: "",
     assignedTo: "John Smith",
-    salesRep: "",
+    salesRepId: "",
     notes: ""
   });
 
@@ -22,7 +22,7 @@ const [formData, setFormData] = useState({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (deal) {
+if (deal) {
 setFormData({
         title: deal.title || "",
         contactId: deal.contactId || "",
@@ -32,7 +32,7 @@ setFormData({
         probability: deal.probability?.toString() || "",
         expectedCloseDate: deal.expectedCloseDate ? deal.expectedCloseDate.split("T")[0] : "",
         assignedTo: deal.assignedTo || "John Smith",
-        salesRep: deal.salesRep || "",
+        salesRepId: deal.salesRepId?.toString() || "",
         notes: deal.notes || ""
       });
     }
@@ -110,7 +110,8 @@ const submitData = {
         value: parseFloat(formData.value),
         probability: parseInt(formData.probability),
         contactId: formData.contactId ? parseInt(formData.contactId) : null,
-        companyId: formData.companyId ? parseInt(formData.companyId) : null
+        companyId: formData.companyId ? parseInt(formData.companyId) : null,
+        salesRepId: formData.salesRepId ? parseInt(formData.salesRepId) : null
       };
       await onSubmit(submitData);
     } catch (error) {
@@ -205,12 +206,20 @@ const submitData = {
           />
 </div>
 
-        <FormField
+<FormField
           label="Sales Rep"
-          name="salesRep"
-          value={formData.salesRep}
+          name="salesRepId"
+          type="select"
+          value={formData.salesRepId}
           onChange={handleChange}
-          placeholder="Enter sales representative name"
+          options={[
+            { value: "", label: "Select Sales Representative" },
+            ...(salesReps || []).map(rep => ({
+              value: rep.Id.toString(),
+              label: rep.name
+            }))
+          ]}
+          placeholder="Select a sales representative"
         />
         <FormField
           label="Notes"

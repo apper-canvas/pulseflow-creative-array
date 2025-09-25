@@ -1,5 +1,5 @@
 [
-  {
+{
     "Id": 1,
     "title": "Enterprise Software License",
     "contactId": 1,
@@ -9,13 +9,13 @@
     "probability": 80,
     "expectedCloseDate": "2024-02-15T00:00:00Z",
     "assignedTo": "John Smith",
-    "salesRep": "Michael Johnson",
+    "salesRepId": 1,
     "createdAt": "2024-01-15T09:00:00Z",
     "updatedAt": "2024-01-22T11:30:00Z",
     "notes": "Final contract review. Expecting signature next week."
   },
 {
-    "Id": 2,
+"Id": 2,
     "title": "Marketing Automation Setup",
     "contactId": 2,
     "companyId": 2,
@@ -24,13 +24,13 @@
     "probability": 100,
     "expectedCloseDate": "2024-01-20T00:00:00Z",
     "assignedTo": "Jane Doe",
-    "salesRep": "Sarah Williams",
+    "salesRepId": 2,
     "createdAt": "2024-01-10T11:15:00Z",
     "updatedAt": "2024-01-20T16:45:00Z",
     "notes": "Deal closed successfully. Implementation starting next month."
   },
 {
-    "Id": 3,
+"Id": 3,
     "title": "Startup Package Deal",
     "contactId": 3,
     "companyId": 3,
@@ -39,13 +39,13 @@
     "probability": 60,
     "expectedCloseDate": "2024-02-28T00:00:00Z",
     "assignedTo": "John Smith",
-    "salesRep": "David Brown",
+    "salesRepId": 3,
     "createdAt": "2024-01-18T13:20:00Z",
     "updatedAt": "2024-01-21T10:15:00Z",
     "notes": "Founder very interested. Waiting for board approval."
   },
 {
-    "Id": 4,
+"Id": 4,
     "title": "IT Infrastructure Upgrade",
     "contactId": 4,
     "companyId": 4,
@@ -54,13 +54,13 @@
     "probability": 70,
     "expectedCloseDate": "2024-03-10T00:00:00Z",
     "assignedTo": "Jane Doe",
-    "salesRep": "Emily Davis",
+    "salesRepId": 4,
     "createdAt": "2024-01-12T10:30:00Z",
     "updatedAt": "2024-01-23T14:20:00Z",
     "notes": "Proposal submitted. Competitive situation with two other vendors."
   },
 {
-    "Id": 5,
+"Id": 5,
     "title": "Department Expansion",
     "contactId": 5,
     "companyId": 5,
@@ -69,13 +69,13 @@
     "probability": 90,
     "expectedCloseDate": "2024-02-05T00:00:00Z",
     "assignedTo": "John Smith",
-    "salesRep": "Robert Wilson",
+    "salesRepId": 5,
     "createdAt": "2024-01-08T08:45:00Z",
     "updatedAt": "2024-01-24T09:30:00Z",
     "notes": "Existing client expansion. Minor pricing negotiations remaining."
   },
 {
-    "Id": 6,
+"Id": 6,
     "title": "Premium Features Upgrade",
     "contactId": 6,
     "companyId": 6,
@@ -84,7 +84,7 @@
     "probability": 40,
     "expectedCloseDate": "2024-03-15T00:00:00Z",
     "assignedTo": "Jane Doe",
-    "salesRep": "Jennifer Garcia",
+    "salesRepId": 6,
     "createdAt": "2024-01-20T14:10:00Z",
     "updatedAt": "2024-01-20T14:10:00Z",
     "notes": "Initial interest. Demo scheduled for next week."

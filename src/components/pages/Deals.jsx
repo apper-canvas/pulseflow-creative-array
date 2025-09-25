@@ -8,29 +8,33 @@ import Empty from "@/components/ui/Empty";
 import { dealService } from "@/services/api/dealService";
 import { contactService } from "@/services/api/contactService";
 import { companyService } from "@/services/api/companyService";
+import { salesRepService } from "@/services/api/salesRepService";
 import { toast } from "react-toastify";
 
 const Deals = () => {
   const [deals, setDeals] = useState([]);
-  const [contacts, setContacts] = useState([]);
+const [contacts, setContacts] = useState([]);
   const [companies, setCompanies] = useState([]);
+  const [salesReps, setSalesReps] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingDeal, setEditingDeal] = useState(null);
 
-  const loadData = async () => {
+const loadData = async () => {
     try {
       setError("");
       setLoading(true);
-      const [dealsData, contactsData, companiesData] = await Promise.all([
+      const [dealsData, contactsData, companiesData, salesRepsData] = await Promise.all([
         dealService.getAll(),
         contactService.getAll(),
-        companyService.getAll()
+        companyService.getAll(),
+        salesRepService.getAll()
       ]);
       setDeals(dealsData);
       setContacts(contactsData);
       setCompanies(companiesData);
+      setSalesReps(salesRepsData);
     } catch (err) {
       setError("Failed to load deals data");
       console.error("Deals loading error:", err);
@@ -78,11 +82,12 @@ const Deals = () => {
   };
 
   if (showForm) {
-    return (
+return (
       <DealForm
         deal={editingDeal}
         contacts={contacts}
         companies={companies}
+        salesReps={salesReps}
         onSubmit={handleFormSubmit}
         onCancel={handleFormCancel}
         isEditing={!!editingDeal}

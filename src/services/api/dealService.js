@@ -1,19 +1,31 @@
 import dealsData from "../mockData/deals.json";
 import contactsData from "../mockData/contacts.json";
 import companiesData from "../mockData/companies.json";
+import { salesRepService } from "./salesRepService.js";
 
 let deals = [...dealsData];
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const enrichDealWithRelatedData = (deal) => {
+const enrichDealWithRelatedData = async (deal) => {
   const contact = contactsData.find(c => c.Id === deal.contactId);
   const company = companiesData.find(c => c.Id === deal.companyId);
+  
+  let salesRepName = null;
+  if (deal.salesRepId) {
+    try {
+      const salesRep = await salesRepService.getById(deal.salesRepId);
+      salesRepName = salesRep ? salesRep.name : null;
+    } catch (error) {
+      salesRepName = null;
+    }
+  }
   
   return {
     ...deal,
     contactName: contact ? `${contact.firstName} ${contact.lastName}` : null,
-    companyName: company ? company.name : null
+    companyName: company ? company.name : null,
+    salesRepName
   };
 };
 
@@ -32,19 +44,20 @@ export const dealService = {
     return enrichDealWithRelatedData(deal);
   },
 
-  async create(dealData) {
+async create(dealData) {
     await delay(400);
     const newDeal = {
       Id: Math.max(...deals.map(d => d.Id), 0) + 1,
       ...dealData,
+      salesRepId: dealData.salesRepId ? parseInt(dealData.salesRepId) : null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
     deals.push(newDeal);
-    return enrichDealWithRelatedData(newDeal);
+    return await enrichDealWithRelatedData(newDeal);
   },
 
-  async update(id, dealData) {
+async update(id, dealData) {
     await delay(400);
     const index = deals.findIndex(d => d.Id === parseInt(id));
     if (index === -1) {
@@ -55,11 +68,12 @@ export const dealService = {
       ...deals[index],
       ...dealData,
       Id: parseInt(id),
+      salesRepId: dealData.salesRepId ? parseInt(dealData.salesRepId) : null,
       updatedAt: new Date().toISOString()
     };
     
     deals[index] = updatedDeal;
-    return enrichDealWithRelatedData(updatedDeal);
+    return await enrichDealWithRelatedData(updatedDeal);
   },
 
   async delete(id) {
