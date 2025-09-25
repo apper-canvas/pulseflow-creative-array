@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "@/components/organisms/Header";
 import TaskList from "@/components/organisms/TaskList";
+import TaskForm from "@/components/organisms/TaskForm";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
@@ -12,7 +13,9 @@ const Tasks = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [showTaskForm, setShowTaskForm] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const loadTasks = async () => {
     try {
       setError("");
@@ -31,19 +34,22 @@ const Tasks = () => {
     loadTasks();
   }, []);
 
-  const handleEditTask = (task) => {
-    // For this demo, we'll just show a toast
-    toast.info("Task editing feature would be implemented here");
+const handleEditTask = (task) => {
+    setEditingTask(task);
+    setShowTaskForm(true);
   };
 
-  const handleDeleteTask = async (task) => {
+const handleDeleteTask = async (task) => {
     if (window.confirm(`Are you sure you want to delete "${task.title}"?`)) {
       try {
+        setError("");
         await taskService.delete(task.Id);
         setTasks(prev => prev.filter(t => t.Id !== task.Id));
         toast.success("Task deleted successfully");
       } catch (err) {
-        toast.error("Failed to delete task");
+        const errorMessage = err.message || "Failed to delete task";
+        setError(errorMessage);
+        toast.error(errorMessage);
         console.error("Delete error:", err);
       }
     }
@@ -64,8 +70,44 @@ const Tasks = () => {
     }
   };
 
-  const handleAddTask = () => {
-    toast.info("Add task feature would be implemented here");
+const handleAddTask = () => {
+    setEditingTask(null);
+    setShowTaskForm(true);
+  };
+
+  const handleTaskSubmit = async (taskData) => {
+    try {
+      setSubmitting(true);
+      setError("");
+      
+      let updatedTask;
+      if (editingTask) {
+        // Update existing task
+        updatedTask = await taskService.update(editingTask.Id, taskData);
+        setTasks(prev => prev.map(t => t.Id === editingTask.Id ? updatedTask : t));
+        toast.success("Task updated successfully");
+      } else {
+        // Create new task
+        updatedTask = await taskService.create(taskData);
+        setTasks(prev => [...prev, updatedTask]);
+        toast.success("Task created successfully");
+      }
+      
+      handleCloseTaskForm();
+    } catch (err) {
+      const errorMessage = err.message || `Failed to ${editingTask ? 'update' : 'create'} task`;
+      setError(errorMessage);
+      toast.error(errorMessage);
+      console.error("Task submit error:", err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleCloseTaskForm = () => {
+    setShowTaskForm(false);
+    setEditingTask(null);
+    setSubmitting(false);
   };
 
   const filteredTasks = tasks.filter(task =>
@@ -76,7 +118,7 @@ const Tasks = () => {
   if (loading) return <Loading type="table" />;
   if (error) return <Error message={error} onRetry={loadTasks} />;
 
-  return (
+return (
     <div className="space-y-6">
       <Header
         title="Tasks"
@@ -86,7 +128,11 @@ const Tasks = () => {
         addLabel="Add Task"
       />
 
-      {filteredTasks.length === 0 ? (
+      {error && <Error message={error} />}
+
+      {loading ? (
+        <Loading />
+      ) : filteredTasks.length === 0 ? (
         <Empty
           title="No tasks found"
           message={searchTerm ? "Try adjusting your search criteria." : "Tasks will appear here as you create them from contacts and deals."}
@@ -102,6 +148,14 @@ const Tasks = () => {
           onToggleComplete={handleToggleComplete}
         />
       )}
+
+      <TaskForm
+        isOpen={showTaskForm}
+        onClose={handleCloseTaskForm}
+        task={editingTask}
+        onSubmit={handleTaskSubmit}
+        loading={submitting}
+      />
     </div>
   );
 };
