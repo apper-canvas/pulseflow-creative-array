@@ -9,11 +9,12 @@
     "probability": 80,
     "expectedCloseDate": "2024-02-15T00:00:00Z",
     "assignedTo": "John Smith",
+    "salesRep": "Michael Johnson",
     "createdAt": "2024-01-15T09:00:00Z",
     "updatedAt": "2024-01-22T11:30:00Z",
     "notes": "Final contract review. Expecting signature next week."
   },
-  {
+{
     "Id": 2,
     "title": "Marketing Automation Setup",
     "contactId": 2,
@@ -23,11 +24,12 @@
     "probability": 100,
     "expectedCloseDate": "2024-01-20T00:00:00Z",
     "assignedTo": "Jane Doe",
+    "salesRep": "Sarah Williams",
     "createdAt": "2024-01-10T11:15:00Z",
     "updatedAt": "2024-01-20T16:45:00Z",
     "notes": "Deal closed successfully. Implementation starting next month."
   },
-  {
+{
     "Id": 3,
     "title": "Startup Package Deal",
     "contactId": 3,
@@ -37,11 +39,12 @@
     "probability": 60,
     "expectedCloseDate": "2024-02-28T00:00:00Z",
     "assignedTo": "John Smith",
+    "salesRep": "David Brown",
     "createdAt": "2024-01-18T13:20:00Z",
     "updatedAt": "2024-01-21T10:15:00Z",
     "notes": "Founder very interested. Waiting for board approval."
   },
-  {
+{
     "Id": 4,
     "title": "IT Infrastructure Upgrade",
     "contactId": 4,
@@ -51,11 +54,12 @@
     "probability": 70,
     "expectedCloseDate": "2024-03-10T00:00:00Z",
     "assignedTo": "Jane Doe",
+    "salesRep": "Emily Davis",
     "createdAt": "2024-01-12T10:30:00Z",
     "updatedAt": "2024-01-23T14:20:00Z",
     "notes": "Proposal submitted. Competitive situation with two other vendors."
   },
-  {
+{
     "Id": 5,
     "title": "Department Expansion",
     "contactId": 5,
@@ -65,11 +69,12 @@
     "probability": 90,
     "expectedCloseDate": "2024-02-05T00:00:00Z",
     "assignedTo": "John Smith",
+    "salesRep": "Robert Wilson",
     "createdAt": "2024-01-08T08:45:00Z",
     "updatedAt": "2024-01-24T09:30:00Z",
     "notes": "Existing client expansion. Minor pricing negotiations remaining."
   },
-  {
+{
     "Id": 6,
     "title": "Premium Features Upgrade",
     "contactId": 6,
@@ -79,6 +84,7 @@
     "probability": 40,
     "expectedCloseDate": "2024-03-15T00:00:00Z",
     "assignedTo": "Jane Doe",
+    "salesRep": "Jennifer Garcia",
     "createdAt": "2024-01-20T14:10:00Z",
     "updatedAt": "2024-01-20T14:10:00Z",
     "notes": "Initial interest. Demo scheduled for next week."

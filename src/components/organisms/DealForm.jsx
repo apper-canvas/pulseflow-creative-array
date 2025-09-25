@@ -5,7 +5,7 @@ import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
 
 const DealForm = ({ deal, contacts, companies, onSubmit, onCancel, isEditing = false }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     title: "",
     contactId: "",
     companyId: "",
@@ -14,6 +14,7 @@ const DealForm = ({ deal, contacts, companies, onSubmit, onCancel, isEditing = f
     probability: "",
     expectedCloseDate: "",
     assignedTo: "John Smith",
+    salesRep: "",
     notes: ""
   });
 
@@ -22,7 +23,7 @@ const DealForm = ({ deal, contacts, companies, onSubmit, onCancel, isEditing = f
 
   useEffect(() => {
     if (deal) {
-      setFormData({
+setFormData({
         title: deal.title || "",
         contactId: deal.contactId || "",
         companyId: deal.companyId || "",
@@ -31,6 +32,7 @@ const DealForm = ({ deal, contacts, companies, onSubmit, onCancel, isEditing = f
         probability: deal.probability?.toString() || "",
         expectedCloseDate: deal.expectedCloseDate ? deal.expectedCloseDate.split("T")[0] : "",
         assignedTo: deal.assignedTo || "John Smith",
+        salesRep: deal.salesRep || "",
         notes: deal.notes || ""
       });
     }
@@ -103,7 +105,7 @@ const DealForm = ({ deal, contacts, companies, onSubmit, onCancel, isEditing = f
     setIsSubmitting(true);
     
     try {
-      const submitData = {
+const submitData = {
         ...formData,
         value: parseFloat(formData.value),
         probability: parseInt(formData.probability),
@@ -201,8 +203,15 @@ const DealForm = ({ deal, contacts, companies, onSubmit, onCancel, isEditing = f
             required
             error={errors.expectedCloseDate}
           />
-        </div>
+</div>
 
+        <FormField
+          label="Sales Rep"
+          name="salesRep"
+          value={formData.salesRep}
+          onChange={handleChange}
+          placeholder="Enter sales representative name"
+        />
         <FormField
           label="Notes"
           name="notes"
