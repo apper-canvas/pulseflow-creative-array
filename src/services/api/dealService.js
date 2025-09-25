@@ -6,20 +6,21 @@ import { salesRepService } from "./salesRepService.js";
 let deals = [...dealsData];
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-const enrichDealWithRelatedData = async (deal) => {
+async function enrichDealWithRelatedData(deal) {
   const contact = contactsData.find(c => c.Id === deal.contactId);
   const company = companiesData.find(c => c.Id === deal.companyId);
   
-// Sales rep lookup handled in frontend for better performance
+  // Get sales rep information
+  const salesRepsData = await salesRepService.getAll();
+  const salesRep = salesRepsData.find(rep => rep.Id === deal.salesRepId);
   
   return {
     ...deal,
     contactName: contact ? `${contact.firstName} ${contact.lastName}` : null,
     companyName: company ? company.name : null,
-};
-};
-
+    salesRepName: salesRep ? salesRep.name : null,
+  };
+}
 export const dealService = {
   async getAll() {
     await delay(300);

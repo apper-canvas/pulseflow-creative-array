@@ -13,7 +13,6 @@ const [formData, setFormData] = useState({
     stage: "Lead",
     probability: "",
     expectedCloseDate: "",
-salesRepId: 1,
     salesRepId: "",
     notes: ""
   });
@@ -31,7 +30,6 @@ setFormData({
         stage: deal.stage || "Lead",
         probability: deal.probability?.toString() || "",
         expectedCloseDate: deal.expectedCloseDate ? deal.expectedCloseDate.split("T")[0] : "",
-salesRepId: deal.salesRepId || 1,
         salesRepId: deal.salesRepId?.toString() || "",
         notes: deal.notes || ""
       });
@@ -109,9 +107,9 @@ const submitData = {
         ...formData,
         value: parseFloat(formData.value),
         probability: parseInt(formData.probability),
-        contactId: formData.contactId ? parseInt(formData.contactId) : null,
+contactId: formData.contactId ? parseInt(formData.contactId) : null,
         companyId: formData.companyId ? parseInt(formData.companyId) : null,
-        salesRepId: formData.salesRepId ? parseInt(formData.salesRepId) : null
+        salesRepId: formData.salesRepId ? parseInt(formData.salesRepId) : null,
       };
       await onSubmit(submitData);
     } catch (error) {

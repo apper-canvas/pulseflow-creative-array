@@ -1,8 +1,8 @@
 import React from "react";
-import Card from "@/components/atoms/Card";
-import Badge from "@/components/atoms/Badge";
-import ApperIcon from "@/components/ApperIcon";
 import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import Badge from "@/components/atoms/Badge";
+import Card from "@/components/atoms/Card";
 
 const DealPipeline = ({ deals, onDealClick, onStageChange }) => {
   const stages = [
@@ -71,10 +71,9 @@ const DealPipeline = ({ deals, onDealClick, onStageChange }) => {
                       <ApperIcon name="Calendar" className="w-3 h-3 mr-1" />
                       {format(new Date(deal.expectedCloseDate), "MMM d")}
                     </div>
-                    
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">{deal.assignedTo}</span>
-                      <div className="flex items-center text-xs text-gray-500">
+<div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600">{deal.salesRepName || 'Unassigned'}</span>
+                      <div className="flex items-center text-gray-600">
                         <ApperIcon name="Clock" className="w-3 h-3 mr-1" />
                         {format(new Date(deal.updatedAt), "MMM d")}
                       </div>
