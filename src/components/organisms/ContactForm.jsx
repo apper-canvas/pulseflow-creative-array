@@ -204,7 +204,7 @@ name="first_name_c"
           onChange={handleChange}
           rows={4}
         />
-          rows={4}
+rows={4}
         />
 
         <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
