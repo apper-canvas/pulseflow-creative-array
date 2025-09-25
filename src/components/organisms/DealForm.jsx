@@ -6,32 +6,32 @@ import ApperIcon from "@/components/ApperIcon";
 
 const DealForm = ({ deal, contacts, companies, salesReps, onSubmit, onCancel, isEditing = false }) => {
 const [formData, setFormData] = useState({
-    title: "",
-    contactId: "",
-    companyId: "",
-    value: "",
-    stage: "Lead",
-    probability: "",
+    title_c: "",
+    contact_id_c: "",
+    company_id_c: "",
+    value_c: "",
+    stage_c: "Lead",
+    probability_c: "",
     expectedCloseDate: "",
-    salesRepId: "",
-    notes: ""
+    sales_rep_id_c: "",
+    notes_c: ""
   });
-
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Populate form when editing
   useEffect(() => {
 if (deal) {
 setFormData({
-        title: deal.title || "",
-        contactId: deal.contactId || "",
-        companyId: deal.companyId || "",
-        value: deal.value?.toString() || "",
-        stage: deal.stage || "Lead",
-        probability: deal.probability?.toString() || "",
+        title_c: deal.title_c || deal.title || "",
+        contact_id_c: deal.contact_id_c?.Id || deal.contactId || "",
+        company_id_c: deal.company_id_c?.Id || deal.companyId || "",
+        value_c: deal.value_c?.toString() || deal.value?.toString() || "",
+        stage_c: deal.stage_c || deal.stage || "Lead",
+        probability_c: deal.probability_c?.toString() || deal.probability?.toString() || "",
         expectedCloseDate: deal.expectedCloseDate ? deal.expectedCloseDate.split("T")[0] : "",
-        salesRepId: deal.salesRepId?.toString() || "",
-        notes: deal.notes || ""
+        sales_rep_id_c: deal.sales_rep_id_c?.toString() || deal.salesRepId?.toString() || "",
+        notes_c: deal.notes_c || deal.notes || ""
       });
     }
   }, [deal]);
@@ -45,14 +45,14 @@ setFormData({
     { value: "Closed Lost", label: "Closed Lost" }
   ];
 
-  const contactOptions = contacts.map(contact => ({
+const contactOptions = contacts.map(contact => ({
     value: contact.Id.toString(),
-    label: `${contact.firstName} ${contact.lastName}`
+    label: `${contact.first_name_c || contact.firstName} ${contact.last_name_c || contact.lastName}`
   }));
-
+  
   const companyOptions = companies.map(company => ({
     value: company.Id.toString(),
-    label: company.name
+    label: company.name_c || company.name
   }));
 
   const handleChange = (e) => {
@@ -105,11 +105,11 @@ setFormData({
     try {
 const submitData = {
         ...formData,
-        value: parseFloat(formData.value),
-        probability: parseInt(formData.probability),
-contactId: formData.contactId ? parseInt(formData.contactId) : null,
-        companyId: formData.companyId ? parseInt(formData.companyId) : null,
-        salesRepId: formData.salesRepId ? parseInt(formData.salesRepId) : null,
+        value_c: parseFloat(formData.value_c),
+        probability_c: parseInt(formData.probability_c),
+        contact_id_c: formData.contact_id_c ? parseInt(formData.contact_id_c) : null,
+        company_id_c: formData.company_id_c ? parseInt(formData.company_id_c) : null,
+        sales_rep_id_c: formData.sales_rep_id_c ? parseInt(formData.sales_rep_id_c) : null,
       };
       await onSubmit(submitData);
     } catch (error) {
@@ -127,57 +127,63 @@ contactId: formData.contactId ? parseInt(formData.contactId) : null,
         </h2>
       </div>
       
-      <form onSubmit={handleSubmit} className="p-6 space-y-6">
+<form onSubmit={handleSubmit} className="p-6 space-y-6">
         <FormField
           label="Deal Title"
-          name="title"
-          value={formData.title}
+          name="title_c"
+          value={formData.title_c}
           onChange={handleChange}
           required
-          error={errors.title}
+          error={errors.title_c}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             label="Contact"
-            name="contactId"
+            name="contact_id_c"
             type="select"
-            value={formData.contactId}
+            value={formData.contact_id_c}
             onChange={handleChange}
-            options={contactOptions}
+            options={[
+              { value: "", label: "Select Contact" },
+              ...contactOptions
+            ]}
           />
           
           <FormField
             label="Company"
-            name="companyId"
+            name="company_id_c"
             type="select"
-            value={formData.companyId}
+            value={formData.company_id_c}
             onChange={handleChange}
-            options={companyOptions}
+            options={[
+              { value: "", label: "Select Company" },
+              ...companyOptions
+            ]}
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             label="Deal Value"
-            name="value"
+            name="value_c"
             type="number"
-            value={formData.value}
+            value={formData.value_c}
             onChange={handleChange}
             required
-            error={errors.value}
+            error={errors.value_c}
             min="0"
             step="0.01"
           />
           
           <FormField
             label="Probability (%)"
-            name="probability"
+            name="probability_c"
             type="number"
-            value={formData.probability}
+            value={formData.probability_c}
             onChange={handleChange}
             required
-            error={errors.probability}
+            error={errors.probability_c}
             min="0"
             max="100"
           />
@@ -186,9 +192,9 @@ contactId: formData.contactId ? parseInt(formData.contactId) : null,
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             label="Stage"
-            name="stage"
+            name="stage_c"
             type="select"
-            value={formData.stage}
+            value={formData.stage_c}
             onChange={handleChange}
             options={stageOptions}
           />
@@ -202,28 +208,22 @@ contactId: formData.contactId ? parseInt(formData.contactId) : null,
             required
             error={errors.expectedCloseDate}
           />
-</div>
+        </div>
 
-<FormField
-          label="Sales Rep"
-          name="salesRepId"
-          type="select"
-          value={formData.salesRepId}
+        <FormField
+          label="Sales Rep ID"
+          name="sales_rep_id_c"
+          type="number"
+          value={formData.sales_rep_id_c}
           onChange={handleChange}
-          options={[
-            { value: "", label: "Select Sales Representative" },
-            ...(salesReps || []).map(rep => ({
-              value: rep.Id.toString(),
-              label: rep.name
-            }))
-          ]}
-          placeholder="Select a sales representative"
+          placeholder="Enter sales representative ID"
         />
+        
         <FormField
           label="Notes"
-          name="notes"
+          name="notes_c"
           type="textarea"
-          value={formData.notes}
+          value={formData.notes_c}
           onChange={handleChange}
           rows={4}
         />

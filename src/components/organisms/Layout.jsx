@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Outlet } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import Sidebar from "./Sidebar";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
+import { AuthContext } from "../../App";
 
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { logout } = useContext(AuthContext);
+  const { user } = useSelector((state) => state.user);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex h-screen">
-        {/* Sidebar */}
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="flex h-screen bg-gray-50">
+      {/* Sidebar for desktop */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
 
-        {/* Main content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Mobile header */}
           <div className="lg:hidden bg-white border-b border-gray-200 p-4">
@@ -26,22 +30,56 @@ const Layout = () => {
                   PulseFlow CRM
                 </span>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSidebarOpen(true)}
-              >
-                <ApperIcon name="Menu" className="w-6 h-6" />
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={logout}
+                >
+                  <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSidebarOpen(true)}
+                >
+                  <ApperIcon name="Menu" className="w-6 h-6" />
+                </Button>
+              </div>
             </div>
           </div>
 
-          {/* Page content */}
-          <main className="flex-1 overflow-auto p-6">
+          {/* Desktop header with logout button */}
+          <div className="hidden lg:block bg-white border-b border-gray-200 p-4">
+            <div className="flex items-center justify-end">
+              <div className="flex items-center space-x-4">
+                {user && (
+                  <span className="text-sm text-gray-600">
+                    Welcome, {user.firstName || user.emailAddress}
+                  </span>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={logout}
+                >
+                  <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile sidebar overlay */}
+          {sidebarOpen && (
+            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          )}
+
+          <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
             <Outlet />
           </main>
         </div>
-      </div>
     </div>
   );
 };

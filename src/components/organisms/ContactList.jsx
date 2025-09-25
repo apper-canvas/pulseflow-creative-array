@@ -22,34 +22,34 @@ const ContactList = ({ contacts, onEdit, onDelete, onView }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {contacts.map((contact) => (
+{contacts.map((contact) => (
               <tr key={contact.Id} className="hover:bg-gray-50 transition-colors">
                 <td className="py-4 px-4">
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
-                      <span className="text-sm font-medium text-primary-700">
-                        {contact.firstName[0]}{contact.lastName[0]}
+                    <div className="flex-shrink-0 w-10 h-10">
+                      <span className="w-10 h-10 bg-primary-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
+                        {(contact.first_name_c || contact.firstName || '')[0]}{(contact.last_name_c || contact.lastName || '')[0]}
                       </span>
                     </div>
-                    <div className="ml-3">
-                      <p className="font-medium text-gray-900">
-                        {contact.firstName} {contact.lastName}
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-900">
+                        {contact.first_name_c || contact.firstName} {contact.last_name_c || contact.lastName}
                       </p>
-                      <p className="text-sm text-gray-600">{contact.position}</p>
+                      <p className="text-sm text-gray-600">{contact.position_c || contact.position}</p>
                     </div>
                   </div>
                 </td>
-                <td className="py-4 px-4 text-gray-900">{contact.company}</td>
-                <td className="py-4 px-4 text-gray-600">{contact.email}</td>
-                <td className="py-4 px-4 text-gray-600">{contact.phone}</td>
+                <td className="py-4 px-4 text-gray-900">{contact.company_c || contact.company}</td>
+                <td className="py-4 px-4 text-gray-600">{contact.email_c || contact.email}</td>
+                <td className="py-4 px-4 text-gray-600">{contact.phone_c || contact.phone}</td>
                 <td className="py-4 px-4">
-                  <StatusIndicator status={contact.status} type="contact" />
+                  <StatusIndicator status={contact.status_c || contact.status} type="contact" />
                 </td>
-                <td className="py-4 px-4 text-gray-600">
-                  {format(new Date(contact.createdAt), "MMM d, yyyy")}
+                <td className="py-4 px-4 text-sm text-gray-600">
+                  {format(new Date(contact.CreatedOn || contact.createdAt), "MMM d, yyyy")}
                 </td>
-                <td className="py-4 px-4 text-right">
-                  <div className="flex items-center justify-end space-x-2">
+                <td className="py-4 px-4">
+                  <div className="flex items-center space-x-2">
                     <Button
                       variant="ghost"
                       size="sm"

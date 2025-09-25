@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import MetricCard from "@/components/molecules/MetricCard";
-import ActivityItem from "@/components/molecules/ActivityItem";
-import Card from "@/components/atoms/Card";
-import Button from "@/components/atoms/Button";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
+import React, { useEffect, useState } from "react";
 import { contactService } from "@/services/api/contactService";
 import { dealService } from "@/services/api/dealService";
 import { taskService } from "@/services/api/taskService";
 import { activityService } from "@/services/api/activityService";
 import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import MetricCard from "@/components/molecules/MetricCard";
+import ActivityItem from "@/components/molecules/ActivityItem";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import Tasks from "@/components/pages/Tasks";
 
 const Dashboard = () => {
   const [data, setData] = useState({
@@ -57,25 +58,23 @@ const Dashboard = () => {
   if (error) return <Error message={error} onRetry={loadDashboardData} />;
 
   const metrics = {
-    totalContacts: data.contacts.length,
-    activeDeals: data.deals.filter(d => !["Closed Won", "Closed Lost"].includes(d.stage)).length,
+totalContacts: data.contacts.length,
+    activeDeals: data.deals.filter(d => !["Closed Won", "Closed Lost"].includes(d.stage_c || d.stage)).length,
     pipelineValue: data.deals
-      .filter(d => !["Closed Won", "Closed Lost"].includes(d.stage))
-      .reduce((sum, d) => sum + d.value, 0),
-    pendingTasks: data.tasks.filter(t => t.status === "Pending").length
+      .filter(d => !["Closed Won", "Closed Lost"].includes(d.stage_c || d.stage))
+      .reduce((sum, d) => sum + (d.value_c || d.value || 0), 0),
+    pendingTasks: data.tasks.filter(t => (t.status_c || t.status) === "Pending").length
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
+  // Get upcoming tasks (next 7 days)
   const upcomingTasks = data.tasks
-    .filter(task => task.status !== "Completed")
+    .filter(task => {
+      if ((task.status_c || task.status) === "Completed") return false;
+      const dueDate = new Date(task.due_date_c || task.dueDate);
+      const now = new Date();
+      const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+      return dueDate >= now && dueDate <= nextWeek;
+    })
     .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
     .slice(0, 5);
 
@@ -164,21 +163,20 @@ const Dashboard = () => {
           ) : (
             <div className="space-y-4">
               {upcomingTasks.map((task) => (
-                <div key={task.Id} className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+<div key={task.Id} className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
                   <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                    task.priority === "High" ? "bg-error-500" :
-                    task.priority === "Medium" ? "bg-warning-500" : "bg-gray-400"
+                    (task.priority_c || task.priority) === "High" ? "bg-error-500" :
+                    (task.priority_c || task.priority) === "Medium" ? "bg-warning-500" : "bg-gray-400"
                   }`} />
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900 truncate">
-                      {task.title}
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {task.title_c || task.title}
                     </p>
-                    <div className="flex items-center mt-1 text-sm text-gray-600">
-                      <ApperIcon name="Calendar" className="w-3 h-3 mr-1" />
-                      {format(new Date(task.dueDate), "MMM d, yyyy")}
+<p className="text-xs text-gray-500 mt-1">
+                      Due: {format(new Date(task.due_date_c || task.dueDate), "MMM d, yyyy")}
                       <span className="mx-2">•</span>
-                      <span>{task.assignedTo}</span>
-                    </div>
+                      {task.assigned_to_c || task.assignedTo || 'Unassigned'}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -199,8 +197,8 @@ const Dashboard = () => {
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {["Lead", "Qualified", "Proposal", "Negotiation", "Closed Won", "Closed Lost"].map((stage) => {
-            const stageDeals = data.deals.filter(d => d.stage === stage);
-            const stageValue = stageDeals.reduce((sum, d) => sum + d.value, 0);
+const stageDeals = data.deals.filter(d => (d.stage_c || d.stage) === stage);
+            const stageValue = stageDeals.reduce((sum, d) => sum + (d.value_c || d.value || 0), 0);
             
             return (
               <div key={stage} className="text-center p-4 bg-gray-50 rounded-lg">

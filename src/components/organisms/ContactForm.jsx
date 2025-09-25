@@ -5,35 +5,35 @@ import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
 
 const ContactForm = ({ contact, onSubmit, onCancel, isEditing = false }) => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    company: "",
-    position: "",
-    status: "Lead",
-    source: "",
-    assignedTo: "John Smith",
-    notes: ""
+const [formData, setFormData] = useState({
+    first_name_c: "",
+    last_name_c: "",
+    email_c: "",
+    phone_c: "",
+    company_c: "",
+    position_c: "",
+    status_c: "Lead",
+    source_c: "",
+    assigned_to_c: "John Smith",
+    notes_c: ""
   });
-
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Populate form with contact data when editing
   useEffect(() => {
     if (contact) {
       setFormData({
-        firstName: contact.firstName || "",
-        lastName: contact.lastName || "",
-        email: contact.email || "",
-        phone: contact.phone || "",
-        company: contact.company || "",
-        position: contact.position || "",
-        status: contact.status || "Lead",
-        source: contact.source || "",
-        assignedTo: contact.assignedTo || "John Smith",
-        notes: contact.notes || ""
+        first_name_c: contact.first_name_c || contact.firstName || "",
+        last_name_c: contact.last_name_c || contact.lastName || "",
+        email_c: contact.email_c || contact.email || "",
+        phone_c: contact.phone_c || contact.phone || "",
+        company_c: contact.company_c || contact.company || "",
+        position_c: contact.position_c || contact.position || "",
+        status_c: contact.status_c || contact.status || "Lead",
+        source_c: contact.source_c || contact.source || "",
+        assigned_to_c: contact.assigned_to_c || contact.assignedTo || "John Smith",
+        notes_c: contact.notes_c || contact.notes || ""
       });
     }
   }, [contact]);
@@ -71,18 +71,18 @@ const ContactForm = ({ contact, onSubmit, onCancel, isEditing = false }) => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "First name is required";
+if (!formData.first_name_c.trim()) {
+      newErrors.first_name_c = "First name is required";
     }
     
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = "Last name is required";
+    if (!formData.last_name_c.trim()) {
+      newErrors.last_name_c = "Last name is required";
     }
     
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
+    if (!formData.email_c.trim()) {
+      newErrors.email_c = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email_c)) {
+      newErrors.email_c = "Email is invalid";
     }
     
     if (!formData.phone.trim()) {
@@ -123,87 +123,87 @@ const ContactForm = ({ contact, onSubmit, onCancel, isEditing = false }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             label="First Name"
-            name="firstName"
-            value={formData.firstName}
+name="first_name_c"
+            value={formData.first_name_c}
             onChange={handleChange}
             required
-            error={errors.firstName}
+            error={errors.first_name_c}
           />
           
           <FormField
             label="Last Name"
-            name="lastName"
-            value={formData.lastName}
+            name="last_name_c"
+            value={formData.last_name_c}
             onChange={handleChange}
             required
-            error={errors.lastName}
+            error={errors.last_name_c}
           />
         </div>
-
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             label="Email"
-            name="email"
+            name="email_c"
             type="email"
-            value={formData.email}
+            value={formData.email_c}
             onChange={handleChange}
             required
-            error={errors.email}
+            error={errors.email_c}
           />
           
           <FormField
             label="Phone"
-            name="phone"
+            name="phone_c"
             type="tel"
-            value={formData.phone}
+            value={formData.phone_c}
             onChange={handleChange}
-            required
-            error={errors.phone}
           />
         </div>
-
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             label="Company"
-            name="company"
-            value={formData.company}
+            name="company_c"
+            value={formData.company_c}
             onChange={handleChange}
           />
           
           <FormField
             label="Position"
-            name="position"
-            value={formData.position}
+            name="position_c"
+            value={formData.position_c}
             onChange={handleChange}
           />
         </div>
-
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             label="Status"
-            name="status"
+            name="status_c"
             type="select"
-            value={formData.status}
+            value={formData.status_c}
             onChange={handleChange}
             options={statusOptions}
           />
           
           <FormField
             label="Source"
-            name="source"
+            name="source_c"
             type="select"
-            value={formData.source}
+            value={formData.source_c}
             onChange={handleChange}
             options={sourceOptions}
           />
         </div>
-
+        
         <FormField
           label="Notes"
-          name="notes"
+          name="notes_c"
           type="textarea"
-          value={formData.notes}
+          value={formData.notes_c}
           onChange={handleChange}
+          rows={4}
+        />
           rows={4}
         />
 

@@ -110,9 +110,9 @@ const handleAddTask = () => {
     setSubmitting(false);
   };
 
-  const filteredTasks = tasks.filter(task =>
-    task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    task.description.toLowerCase().includes(searchTerm.toLowerCase())
+const filteredTasks = tasks.filter(task =>
+    (task.title_c || task.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (task.description_c || task.description || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) return <Loading type="table" />;

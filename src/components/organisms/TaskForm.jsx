@@ -1,44 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import Button from '@/components/atoms/Button';
-import Input from '@/components/atoms/Input';
-import TextArea from '@/components/atoms/TextArea';
-import Select from '@/components/atoms/Select';
-import Label from '@/components/atoms/Label';
-import Card from '@/components/atoms/Card';
-import ApperIcon from '@/components/ApperIcon';
+import React, { useEffect, useState } from "react";
+import ApperIcon from "@/components/ApperIcon";
+import TextArea from "@/components/atoms/TextArea";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import Select from "@/components/atoms/Select";
+import Card from "@/components/atoms/Card";
+import Label from "@/components/atoms/Label";
 
 const TaskForm = ({ isOpen, onClose, task = null, onSubmit, loading = false }) => {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    priority: 'Medium',
-    status: 'Pending',
-    dueDate: '',
-    assignedTo: ''
+const [formData, setFormData] = useState({
+    title_c: '',
+    description_c: '',
+    priority_c: 'Medium',
+    status_c: 'Pending',
+    due_date_c: '',
+    assigned_to_c: ''
   });
-
   const [errors, setErrors] = useState({});
-
   useEffect(() => {
     if (task) {
       // Edit mode - populate form with existing task data
       setFormData({
-        title: task.title || '',
-        description: task.description || '',
-        priority: task.priority || 'Medium',
-        status: task.status || 'Pending',
-        dueDate: task.dueDate ? task.dueDate.split('T')[0] : '',
-        assignedTo: task.assignedTo || ''
+        title_c: task.title_c || task.title || '',
+        description_c: task.description_c || task.description || '',
+        priority_c: task.priority_c || task.priority || 'Medium',
+        status_c: task.status_c || task.status || 'Pending',
+        due_date_c: task.due_date_c ? task.due_date_c.split('T')[0] : (task.dueDate ? task.dueDate.split('T')[0] : ''),
+        assigned_to_c: task.assigned_to_c || task.assignedTo || ''
       });
-    } else {
+} else {
       // Create mode - reset form
       setFormData({
-        title: '',
-        description: '',
-        priority: 'Medium',
-        status: 'Pending',
-        dueDate: '',
-        assignedTo: ''
+        title_c: '',
+        description_c: '',
+        priority_c: 'Medium',
+        status_c: 'Pending',
+        due_date_c: '',
+        assigned_to_c: ''
       });
     }
     setErrors({});
@@ -61,23 +59,24 @@ const TaskForm = ({ isOpen, onClose, task = null, onSubmit, loading = false }) =
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.title.trim()) {
-      newErrors.title = 'Task title is required';
+if (!formData.title_c.trim()) {
+      newErrors.title_c = 'Task title is required';
     }
-
-    if (!formData.dueDate) {
-      newErrors.dueDate = 'Due date is required';
+    
+    if (!formData.due_date_c) {
+      newErrors.due_date_c = 'Due date is required';
     } else {
-      const selectedDate = new Date(formData.dueDate);
+      const selectedDate = new Date(formData.due_date_c);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
+      
       if (selectedDate < today) {
-        newErrors.dueDate = 'Due date cannot be in the past';
+        newErrors.due_date_c = 'Due date cannot be in the past';
       }
-    }
+}
 
-    if (!formData.assignedTo.trim()) {
-      newErrors.assignedTo = 'Assigned to field is required';
+    if (!formData.assigned_to_c.trim()) {
+      newErrors.assigned_to_c = 'Assigned to field is required';
     }
 
     setErrors(newErrors);
@@ -91,22 +90,21 @@ const TaskForm = ({ isOpen, onClose, task = null, onSubmit, loading = false }) =
     }
 
     // Format the data for submission
-    const submitData = {
+const submitData = {
       ...formData,
-      dueDate: new Date(formData.dueDate).toISOString()
+      due_date_c: new Date(formData.due_date_c).toISOString()
     };
 
     onSubmit(submitData);
-  };
 
-  const handleClose = () => {
+    // Reset form after successful submission
     setFormData({
-      title: '',
-      description: '',
-      priority: 'Medium',
-      status: 'Pending',
-      dueDate: '',
-      assignedTo: ''
+      title_c: '',
+      description_c: '',
+      priority_c: 'Medium',
+      status_c: 'Pending',
+      due_date_c: '',
+      assigned_to_c: ''
     });
     setErrors({});
     onClose();
@@ -123,10 +121,10 @@ const TaskForm = ({ isOpen, onClose, task = null, onSubmit, loading = false }) =
             <h2 className="text-xl font-semibold text-gray-900">
               {task ? 'Edit Task' : 'Create New Task'}
             </h2>
-            <Button
+<Button
               variant="ghost"
               size="sm"
-              onClick={handleClose}
+              onClick={onClose}
               disabled={loading}
             >
               <ApperIcon name="X" className="w-5 h-5" />
@@ -140,91 +138,80 @@ const TaskForm = ({ isOpen, onClose, task = null, onSubmit, loading = false }) =
               <Label htmlFor="title">Task Title *</Label>
               <Input
                 id="title"
-                value={formData.title}
-                onChange={(e) => handleInputChange('title', e.target.value)}
+value={formData.title_c}
+                onChange={(e) => handleInputChange('title_c', e.target.value)}
                 placeholder="Enter task title"
-                error={errors.title}
+                error={errors.title_c}
                 disabled={loading}
               />
-              {errors.title && (
-                <p className="text-sm text-error-600 mt-1">{errors.title}</p>
-              )}
             </div>
 
-            {/* Description */}
             <div>
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description_c">Description</Label>
               <TextArea
-                id="description"
-                value={formData.description}
-                onChange={(e) => handleInputChange('description', e.target.value)}
+                id="description_c"
+                value={formData.description_c}
+                onChange={(e) => handleInputChange('description_c', e.target.value)}
                 placeholder="Enter task description"
                 rows={3}
                 disabled={loading}
               />
             </div>
 
-            {/* Priority */}
-            <div>
-              <Label htmlFor="priority">Priority *</Label>
-              <Select
-                id="priority"
-                value={formData.priority}
-                onChange={(e) => handleInputChange('priority', e.target.value)}
-                disabled={loading}
-              >
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-                <option value="Critical">Critical</option>
-              </Select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="priority_c">Priority</Label>
+                <Select
+                  id="priority_c"
+                  value={formData.priority_c}
+                  onChange={(e) => handleInputChange('priority_c', e.target.value)}
+                  disabled={loading}
+                >
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="status_c">Status</Label>
+                <Select
+                  id="status_c"
+                  value={formData.status_c}
+                  onChange={(e) => handleInputChange('status_c', e.target.value)}
+                  disabled={loading}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </Select>
+              </div>
             </div>
 
-            {/* Status */}
-            <div>
-              <Label htmlFor="status">Status *</Label>
-              <Select
-                id="status"
-                value={formData.status}
-                onChange={(e) => handleInputChange('status', e.target.value)}
-                disabled={loading}
-              >
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-              </Select>
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="due_date_c">Due Date *</Label>
+                <Input
+                  id="due_date_c"
+                  type="date"
+                  value={formData.due_date_c}
+                  onChange={(e) => handleInputChange('due_date_c', e.target.value)}
+                  error={errors.due_date_c}
+                  disabled={loading}
+                />
+              </div>
 
-            {/* Due Date */}
-            <div>
-              <Label htmlFor="dueDate">Due Date *</Label>
-              <Input
-                id="dueDate"
-                type="date"
-                value={formData.dueDate}
-                onChange={(e) => handleInputChange('dueDate', e.target.value)}
-                error={errors.dueDate}
-                disabled={loading}
-              />
-              {errors.dueDate && (
-                <p className="text-sm text-error-600 mt-1">{errors.dueDate}</p>
-              )}
-            </div>
-
-            {/* Assigned To */}
-            <div>
-              <Label htmlFor="assignedTo">Assigned To *</Label>
-              <Input
-                id="assignedTo"
-                value={formData.assignedTo}
-                onChange={(e) => handleInputChange('assignedTo', e.target.value)}
-                placeholder="Enter assignee name"
-                error={errors.assignedTo}
-                disabled={loading}
-              />
-              {errors.assignedTo && (
-                <p className="text-sm text-error-600 mt-1">{errors.assignedTo}</p>
-              )}
+              <div>
+<Label htmlFor="assigned_to_c">Assigned To *</Label>
+                <Input
+                  id="assigned_to_c"
+                  value={formData.assigned_to_c}
+                  onChange={(e) => handleInputChange('assigned_to_c', e.target.value)}
+                  placeholder="Enter assignee name"
+                  error={errors.assigned_to_c}
+                  disabled={loading}
+                />
+              </div>
             </div>
 
             {/* Form Actions */}
@@ -232,7 +219,7 @@ const TaskForm = ({ isOpen, onClose, task = null, onSubmit, loading = false }) =
               <Button
                 type="button"
                 variant="outline"
-                onClick={handleClose}
+                onClick={onClose}
                 disabled={loading}
               >
                 Cancel

@@ -86,10 +86,10 @@ const Contacts = () => {
     setEditingContact(null);
   };
 
-  const filteredContacts = contacts.filter(contact =>
-    `${contact.firstName} ${contact.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    contact.company.toLowerCase().includes(searchTerm.toLowerCase())
+const filteredContacts = contacts.filter(contact =>
+    `${contact.first_name_c || contact.firstName} ${contact.last_name_c || contact.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (contact.email_c || contact.email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (contact.company_c || contact.company || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (showForm) {

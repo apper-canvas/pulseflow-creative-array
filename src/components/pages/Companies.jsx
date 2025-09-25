@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Header from "@/components/organisms/Header";
-import Card from "@/components/atoms/Card";
-import Button from "@/components/atoms/Button";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
+import React, { useEffect, useState } from "react";
 import { companyService } from "@/services/api/companyService";
 import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Header from "@/components/organisms/Header";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
 
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
@@ -34,27 +34,30 @@ const Companies = () => {
   }, []);
 
   const filteredCompanies = companies.filter(company =>
-    company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    company.industry.toLowerCase().includes(searchTerm.toLowerCase())
+(company.name_c || company.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (company.industry_c || company.industry || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) return <Loading type="cards" />;
-  if (error) return <Error message={error} onRetry={loadCompanies} />;
+  if (error) {
+    return <Error message={error} onRetry={loadCompanies} />;
+  }
 
   return (
     <div className="space-y-6">
-      <Header
+      <Header 
         title="Companies"
         searchValue={searchTerm}
         onSearchChange={setSearchTerm}
-        showAdd={false}
+        onAddClick={() => {/* Add company functionality */}}
+        addLabel="Add Company"
       />
 
-      {filteredCompanies.length === 0 ? (
-        <Empty
+      {loading ? (
+        <Loading />
+      ) : filteredCompanies.length === 0 ? (
+        <Empty 
           title="No companies found"
-          message={searchTerm ? "Try adjusting your search criteria." : "Companies will appear here as you add contacts and deals."}
-          icon="Building"
+          description="Start by adding your first company or adjust your search criteria."
         />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -64,61 +67,59 @@ const Companies = () => {
                 <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
                   <ApperIcon name="Building" className="w-6 h-6 text-primary-600" />
                 </div>
-                <Button variant="ghost" size="sm">
-                  <ApperIcon name="ExternalLink" className="w-4 h-4" />
-                </Button>
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" size="sm">
+                    <ApperIcon name="MoreHorizontal" className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
-
-              <div className="space-y-3">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{company.name}</h3>
-                  <p className="text-sm text-gray-600">{company.industry}</p>
+              
+              <div className="space-y-2 mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">{company.name_c || company.name}</h3>
+                <p className="text-sm text-gray-600">{company.industry_c || company.industry}</p>
+              </div>
+              
+              <div className="space-y-2 text-sm text-gray-600">
+                <div className="flex items-center">
+                  <ApperIcon name="Users" className="w-4 h-4 mr-2" />
+                  {company.size_c || company.size} employees
                 </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <ApperIcon name="Users" className="w-4 h-4 mr-2" />
-                    {company.size} employees
+                
+                {(company.website_c || company.website) && (
+                  <div className="flex items-center">
+                    <ApperIcon name="Globe" className="w-4 h-4 mr-2" />
+                    <a 
+                      href={company.website_c || company.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-primary-600 hover:text-primary-700 truncate"
+                    >
+                      {company.website_c || company.website}
+                    </a>
                   </div>
-                  
-                  {company.website && (
-                    <div className="flex items-center text-sm text-gray-600">
-                      <ApperIcon name="Globe" className="w-4 h-4 mr-2" />
-                      <a 
-                        href={company.website} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-primary-600 hover:underline"
-                      >
-                        Website
-                      </a>
-                    </div>
-                  )}
-                  
-                  {company.phone && (
-                    <div className="flex items-center text-sm text-gray-600">
-                      <ApperIcon name="Phone" className="w-4 h-4 mr-2" />
-                      {company.phone}
-                    </div>
-                  )}
-                  
-                  {company.address && (
-                    <div className="flex items-center text-sm text-gray-600">
-                      <ApperIcon name="MapPin" className="w-4 h-4 mr-2" />
-                      <span className="line-clamp-2">{company.address}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="pt-3 border-t border-gray-200">
-                  <p className="text-xs text-gray-500">
-                    Added {format(new Date(company.createdAt), "MMM d, yyyy")}
-                  </p>
-                </div>
+                )}
+                
+                {(company.phone_c || company.phone) && (
+                  <div className="flex items-center">
+                    <ApperIcon name="Phone" className="w-4 h-4 mr-2" />
+                    {company.phone_c || company.phone}
+                  </div>
+                )}
+                
+                {(company.address_c || company.address) && (
+                  <div className="flex items-center">
+                    <ApperIcon name="MapPin" className="w-4 h-4 mr-2" />
+                    <span className="truncate">{company.address_c || company.address}</span>
+                  </div>
+                )}
+                
+                <p className="text-xs text-gray-500 mt-3">
+                  Added {format(new Date(company.created_at_c || company.createdAt), "MMM d, yyyy")}
+                </p>
               </div>
             </Card>
           ))}
-        </div>
+</div>
       )}
     </div>
   );

@@ -15,68 +15,71 @@ const DealPipeline = ({ deals, onDealClick, onStageChange }) => {
   ];
 
   const getDealsByStage = (stage) => {
-    return deals.filter(deal => deal.stage === stage);
+return deals.filter(deal => (deal.stage_c || deal.stage) === stage);
   };
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
     }).format(amount);
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 overflow-x-auto">
       {stages.map((stage) => {
-        const stageDeals = getDealsByStage(stage.id);
-        const stageValue = stageDeals.reduce((sum, deal) => sum + deal.value, 0);
+        const stageDeals = getDealsByStage(stage);
+        const stageCount = stageDeals.length;
+        const stageValue = stageDeals.reduce((sum, deal) => sum + (deal.value_c || deal.value || 0), 0);
         
         return (
-          <div key={stage.id} className="flex flex-col">
-            <div className={`${stage.color} rounded-t-lg p-4 border-b`}>
-              <h3 className="font-semibold text-gray-900">{stage.name}</h3>
-              <div className="flex items-center justify-between mt-2">
-                <span className="text-sm text-gray-600">{stageDeals.length} deals</span>
-                <span className="text-sm font-medium text-gray-900">
+          <div key={stage} className="flex-shrink-0 w-80 bg-gray-100 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold text-gray-900">{stage}</h3>
+              <div className="flex items-center space-x-2">
+                <Badge variant="secondary">{stageCount}</Badge>
+                <span className="text-sm text-gray-600 font-medium">
                   {formatCurrency(stageValue)}
                 </span>
               </div>
             </div>
             
-            <div className="space-y-3 p-4 min-h-[400px] bg-gray-50 rounded-b-lg">
+            <div className="space-y-3">
               {stageDeals.map((deal) => (
                 <Card 
+                  onClick={() => onDealClick?.(deal)}
                   key={deal.Id} 
                   className="p-4 cursor-pointer hover:shadow-md transition-shadow bg-white"
-                  onClick={() => onDealClick(deal)}
                 >
                   <div className="space-y-3">
                     <div>
-                      <h4 className="font-medium text-gray-900 truncate">
-                        {deal.title}
+                      <h4 className="font-medium text-gray-900 text-sm">
+                        {deal.title_c || deal.title}
                       </h4>
-                      <p className="text-sm text-gray-600">{deal.companyName}</p>
+                      <p className="text-sm text-gray-600">
+                        {deal.company_id_c?.Name || deal.companyName || 'No Company'}
+                      </p>
                     </div>
                     
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-semibold text-gray-900">
-                        {formatCurrency(deal.value)}
+                      <span className="font-semibold text-primary-600">
+                        {formatCurrency(deal.value_c || deal.value)}
                       </span>
-                      <Badge variant="default">{deal.probability}%</Badge>
+                      <Badge variant="default">{deal.probability_c || deal.probability}%</Badge>
                     </div>
                     
                     <div className="flex items-center text-sm text-gray-600">
                       <ApperIcon name="Calendar" className="w-3 h-3 mr-1" />
-                      {format(new Date(deal.expectedCloseDate), "MMM d")}
+                      {deal.expectedCloseDate ? format(new Date(deal.expectedCloseDate), "MMM d") : 'No date'}
                     </div>
-<div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">{deal.salesRepName || 'Unassigned'}</span>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600">
+                        {deal.sales_rep_id_c ? `Rep ID: ${deal.sales_rep_id_c}` : 'Unassigned'}
+                      </span>
                       <div className="flex items-center text-gray-600">
                         <ApperIcon name="Clock" className="w-3 h-3 mr-1" />
-                        {format(new Date(deal.updatedAt), "MMM d")}
-                      </div>
+                        {deal.updated_at_c ? format(new Date(deal.updated_at_c), "MMM d") : 'N/A'}
+</div>
                     </div>
                   </div>
                 </Card>
