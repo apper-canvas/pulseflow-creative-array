@@ -7,7 +7,7 @@ export const dealService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
       
-      const response = await apperClient.fetchRecords('deal_c', {
+const response = await apperClient.fetchRecords('deal_c', {
         fields: [
           {"field": {"Name": "Name"}},
           {"field": {"Name": "title_c"}},
@@ -39,7 +39,7 @@ export const dealService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
       
-      const response = await apperClient.getRecordById('deal_c', parseInt(id), {
+const response = await apperClient.getRecordById('deal_c', parseInt(id), {
         fields: [
           {"field": {"Name": "Name"}},
           {"field": {"Name": "title_c"}},
@@ -70,14 +70,14 @@ export const dealService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
       
-      const params = {
+const params = {
         records: [{
           Name: dealData.title_c || dealData.title,
           title_c: dealData.title_c || dealData.title,
           value_c: dealData.value_c || parseFloat(dealData.value),
           stage_c: dealData.stage_c || dealData.stage || "Lead",
           probability_c: dealData.probability_c || parseInt(dealData.probability),
-          sales_rep_id_c: dealData.sales_rep_id_c || (dealData.salesRepId ? parseInt(dealData.salesRepId) : null),
+          sales_rep_id_c: dealData.sales_rep_id_c ? parseInt(dealData.sales_rep_id_c) : null,
           created_at_c: new Date().toISOString(),
           updated_at_c: new Date().toISOString(),
           notes_c: dealData.notes_c || dealData.notes,
@@ -126,8 +126,8 @@ export const dealService = {
       }
       if (dealData.value_c || dealData.value) updateData.value_c = dealData.value_c || parseFloat(dealData.value);
       if (dealData.stage_c || dealData.stage) updateData.stage_c = dealData.stage_c || dealData.stage;
-      if (dealData.probability_c || dealData.probability) updateData.probability_c = dealData.probability_c || parseInt(dealData.probability);
-      if (dealData.sales_rep_id_c || dealData.salesRepId) updateData.sales_rep_id_c = dealData.sales_rep_id_c || parseInt(dealData.salesRepId);
+if (dealData.probability_c || dealData.probability) updateData.probability_c = dealData.probability_c || parseInt(dealData.probability);
+      if (dealData.sales_rep_id_c) updateData.sales_rep_id_c = parseInt(dealData.sales_rep_id_c);
       if (dealData.notes_c || dealData.notes) updateData.notes_c = dealData.notes_c || dealData.notes;
       if (dealData.contact_id_c || dealData.contactId) updateData.contact_id_c = dealData.contact_id_c || parseInt(dealData.contactId);
       if (dealData.company_id_c || dealData.companyId) updateData.company_id_c = dealData.company_id_c || parseInt(dealData.companyId);
@@ -190,12 +190,13 @@ export const dealService = {
       });
       
       const response = await apperClient.fetchRecords('deal_c', {
-        fields: [
+fields: [
           {"field": {"Name": "Name"}},
           {"field": {"Name": "title_c"}},
           {"field": {"Name": "value_c"}},
           {"field": {"Name": "stage_c"}},
           {"field": {"Name": "probability_c"}},
+          {"field": {"Name": "sales_rep_id_c"}},
           {"field": {"Name": "contact_id_c"}},
           {"field": {"Name": "company_id_c"}}
         ],

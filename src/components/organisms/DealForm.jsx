@@ -73,16 +73,16 @@ const contactOptions = contacts.map(contact => ({
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.title.trim()) {
-      newErrors.title = "Deal title is required";
+if (!formData.title_c.trim()) {
+      newErrors.title_c = "Deal title is required";
     }
     
-    if (!formData.value || isNaN(formData.value) || parseFloat(formData.value) <= 0) {
-      newErrors.value = "Valid deal value is required";
+    if (!formData.value_c || isNaN(formData.value_c) || parseFloat(formData.value_c) <= 0) {
+      newErrors.value_c = "Valid deal value is required";
     }
     
-    if (!formData.probability || isNaN(formData.probability) || parseFloat(formData.probability) < 0 || parseFloat(formData.probability) > 100) {
-      newErrors.probability = "Probability must be between 0 and 100";
+    if (!formData.probability_c || isNaN(formData.probability_c) || parseFloat(formData.probability_c) < 0 || parseFloat(formData.probability_c) > 100) {
+      newErrors.probability_c = "Probability must be between 0 and 100";
     }
     
     if (!formData.expectedCloseDate) {
@@ -188,8 +188,7 @@ const submitData = {
             max="100"
           />
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             label="Stage"
             name="stage_c"
@@ -211,13 +210,21 @@ const submitData = {
         </div>
 
         <FormField
-          label="Sales Rep ID"
+          label="Sales Representative"
           name="sales_rep_id_c"
-          type="number"
+          type="select"
           value={formData.sales_rep_id_c}
           onChange={handleChange}
-          placeholder="Enter sales representative ID"
+          options={[
+            { value: "", label: "Select Sales Rep" },
+            ...(salesReps || []).map(rep => ({ 
+              value: rep.Id.toString(), 
+              label: `${rep.name} - ${rep.territory}` 
+            }))
+          ]}
+          placeholder="Choose a sales representative"
         />
+
         
         <FormField
           label="Notes"

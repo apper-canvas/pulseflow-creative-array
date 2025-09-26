@@ -86,7 +86,7 @@ return (
       <DealForm
         deal={editingDeal}
         contacts={contacts}
-        companies={companies}
+companies={companies}
         salesReps={salesReps}
         onSubmit={handleFormSubmit}
         onCancel={handleFormCancel}

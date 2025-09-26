@@ -1,5 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
+import { formatCurrency } from "@/utils/formatCurrency";
 import ApperIcon from "@/components/ApperIcon";
 import Badge from "@/components/atoms/Badge";
 import Card from "@/components/atoms/Card";
@@ -14,8 +15,14 @@ const DealPipeline = ({ deals, onDealClick, onStageChange }) => {
     { id: "Closed Lost", name: "Closed Lost", color: "bg-red-100" }
   ];
 
-  const getDealsByStage = (stage) => {
-return deals.filter(deal => (deal.stage_c || deal.stage) === stage);
+const getDealsByStage = (stage) => {
+    return deals.filter(deal => (deal.stage_c || deal.stage) === stage);
+  };
+
+  const getSalesRepName = (salesRep) => {
+    if (!salesRep) return 'No Sales Rep';
+    if (typeof salesRep === 'string') return salesRep;
+    return salesRep.Name || salesRep.name || salesRep.full_name || 'Unknown Rep';
   };
 
   const formatCurrency = (amount) => {
@@ -73,8 +80,8 @@ return deals.filter(deal => (deal.stage_c || deal.stage) === stage);
                       {deal.expectedCloseDate ? format(new Date(deal.expectedCloseDate), "MMM d") : 'No date'}
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">
-                        {deal.sales_rep_id_c ? `Rep ID: ${deal.sales_rep_id_c}` : 'Unassigned'}
+<span className="text-gray-600">
+                        {getSalesRepName(deal.sales_rep_id_c)}
                       </span>
                       <div className="flex items-center text-gray-600">
                         <ApperIcon name="Clock" className="w-3 h-3 mr-1" />
